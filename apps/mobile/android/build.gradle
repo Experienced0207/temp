@@ -1,0 +1,26 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+  }
+}
+
+// Optional verified local-toolchain override; default remains Expo SDK 56's pinned NDK.
+if (findProperty("ayusetu.ndkVersion")) { ext.ndkVersion = findProperty("ayusetu.ndkVersion") } else if (findProperty("dhaaga.ndkVersion")) { ext.ndkVersion = findProperty("dhaaga.ndkVersion") }
+apply plugin: "expo-root-project"
+apply plugin: "com.facebook.react.rootproject"

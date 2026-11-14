@@ -1,0 +1,62 @@
+.DS_Store
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.db
+*.db-*
+*.sqlite*
+.venv/
+__pycache__/
+.pytest_cache/
+.expo/
+.wrangler/
+coverage/
+test-results/
+playwright-report/
+
+# Native build outputs and local privacy assets
+apps/mobile/android/.gradle/
+apps/mobile/android/.kotlin/
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+apps/mobile/android/local.properties
+apps/mobile/android/app/debug.keystore
+.privacy-node/
+*.log
+
+apps/mobile/android/app/.cxx/
+apps/mobile/android/.idea/
+
+# Persistent synthetic integration workspace
+.local/
+frontend/app/.dart_tool/
+frontend/app/build/
+
+# Mobile Release Artifacts & Large Binaries
+*.apk
+*.aab
+*.ipa
+*.dill
+
+# Build artifacts & compiler caches
+*.tsbuildinfo
+build/
+**/build/
+.dart_tool/
+**/.dart_tool/
+.gradle/
+**/.gradle/
+.cxx/
+**/.cxx/
+
+# Secrets, Keystores & Platform Credentials
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist
+**/local.properties
+

@@ -1,0 +1,105 @@
+import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
+import "package:kiosk_app/core/constants/app_colors.dart";
+import "package:kiosk_app/core/widgets/app_scaffold_shell.dart";
+import "package:kiosk_app/features/intake/presentation/providers/intake_provider.dart";
+
+class QueueTokenScreen extends ConsumerStatefulWidget {
+  const QueueTokenScreen({super.key});
+
+  @override
+  ConsumerState<QueueTokenScreen> createState() => _QueueTokenScreenState();
+}
+
+class _QueueTokenScreenState extends ConsumerState<QueueTokenScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(intakeProvider.notifier).finalizeIntake();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(intakeProvider);
+
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 550),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: AyuSetuLogoBadge(
+                          height: 32,
+                          borderRadius: 12,
+                          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        ),
+                      ),
+                      const Icon(Icons.check_circle, color: AppColors.success, size: 64),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "Intake Complete & Token Issued",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "All India Institute of Ayurveda (AIIA) - OPD Room 4",
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                        textAlign: TextAlign.center,
+                      ),
+                      const Divider(height: 32),
+                      const Text(
+                        "YOUR OPD TOKEN NUMBER",
+                        style: TextStyle(color: AppColors.textMuted, fontSize: 12, letterSpacing: 1.5),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        state.tokenNumber,
+                        style: const TextStyle(fontSize: 52, fontWeight: FontWeight.bold, color: AppColors.primaryLight),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        decoration: BoxDecoration(color: AppColors.pmjayGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(20)),
+                        child: const Text(
+                          "PM-JAY Beneficiary • Cashless Approved",
+                          style: TextStyle(color: AppColors.pmjayGold, fontWeight: FontWeight.bold, fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Your case summary has been sent directly to the doctor consultation screen.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                        onPressed: () => context.go("/"),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text("Start Next Patient Intake"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
